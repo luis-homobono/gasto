@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Gasto{% endblock %}
+{% block content %}
+    <!-- Header -->
+    <header class="section">
+        <h1>Mi Finanzas</h1>
+        <p class="text-sm-gray">Resumen del mes</p>
+    </header>
+
+    <!-- Patrimonio Neto -->
+    <section class="card card-main">
+        <p class="text-sm">Patrimonio Neto</p>
+        <h2>$12,500.00</h2>
+    </section>
+
+    <!-- Totales: Activos y Pasivos -->
+    <section class="section" style="display: flex; gap: 16px;">
+        <div class="card" style="flex: 1;">
+            <p class="text-sm">Activos</p>
+            <h3>$15,000</h3>
+        </div>
+        <div class="card" style="flex: 1;">
+            <p class="text-sm">Pasivos</p>
+            <h3>$2,500</h3>
+        </div>
+    </section>
+
+    <!-- Botones de acción -->
+    <section class="section " style="display: flex; justify-content: space-between;">
+        <a href="#" class="btn btn-green">+ Ingreso</a>
+        <a href="#" class="btn btn-red">+ Gasto</a>
+    </section>
+{% endblock %}

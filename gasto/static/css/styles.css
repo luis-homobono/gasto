@@ -1,0 +1,147 @@
+/* Settings UI */
+:root {
+    --white: #FFFFFF;
+    --black: #212121;
+    --primary: #1A2E35;
+    /* --secundary: #1A2E35; */
+    --gray: #ccc;
+    /* --gray: #666; */
+    /* --grisClaro: #DFE9F3; */
+    --green: #A3F7BF;
+    --red: #EF4444;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+/* General styles */
+body {
+    font-size: 1.6rem;
+    background-color: var(--primary);
+    color: var(--white);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 1.6rem;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+h2 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Section */
+.section {
+    margin-bottom: 2.4rem;
+    /* padding-bottom: 2rem; */
+}
+
+.card {
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 1.2rem;
+    padding: 1.6rem;
+    margin-bottom: 1.2rem;
+}
+
+.card-main {
+    background-color: #A3F7BF;
+    color: var(--black);
+}
+
+.text-sm {
+    font-size: 2rem;
+    /* color: var(--gray); */
+    color: var(--black);
+}
+
+.text-sm-gray {
+    font-size: 2rem;
+    color: var(--gray)
+}
+
+@media (max-width: 768px) {
+    .text-sm-hidden {
+        display: none;
+    }
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    padding: 1.2rem 2.0rem;
+    border-radius: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-green {
+    background-color: var(--green);
+    color: var(--black);
+}
+
+.btn-red {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+/* Progress bar */
+.progress-bar {
+  background-color: var(--gray);
+  border-radius: 0.6rem;
+  height: 1rem;
+  overflow: hidden;
+  margin-top: 0.8rem;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 0.6rem;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary);
+    border-top: 0.1rem solid #444;
+    display: flex;
+    justify-content: space-around;
+    padding: 1.2rem 0;
+}
+
+.navbar a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .active {
+    color: var(--green);
+}
+
+.navbar a:hover {
+    color: var(--green);
+}
