@@ -23,5 +23,7 @@ def register_blueprints(app: Flask):
         app (Flask): Flask app
     """
     from gasto.blueprints.core.views import core
+    from gasto.blueprints.error_pages.views import error_pages
 
+    app.register_blueprint(error_pages)
     app.register_blueprint(core, url_prefix="/")
