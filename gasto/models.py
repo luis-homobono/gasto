@@ -54,19 +54,21 @@ class Balance(db.Model):
         return f"<Balance {self.date}>"
 
 
-class TypeAsset(db.Model):
-    __tablename__ = "types_assets"
+class AssetLiabilityType(db.Model):
+    __tablename__ = "assets_liabilities_types"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
+    is_asset = db.Column(db.Boolean, default=False)
     # Relationships
-    assets = db.relationship("Asset", backref="type_asset", lazy=True)
+    assets = db.relationship("Asset", backref="asset_liabity_type", lazy=True)
+    liabilities = db.relationship("Liability", backref="asset_liabity_type", lazy=True)
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
-        return f"<TypeAsset {self.name}>"
+        return f"<AssetLiabilityType {self.name}>"
 
 
 class Asset(db.Model):
@@ -79,8 +81,8 @@ class Asset(db.Model):
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
     # Relationships
     balance_id = db.Column(db.Integer, db.ForeignKey("balances.id"), nullable=False)
-    type_asset_id = db.Column(
-        db.Integer, db.ForeignKey("types_assets.id"), nullable=False
+    type_id = db.Column(
+        db.Integer, db.ForeignKey("assets_liabilities_types.id"), nullable=False
     )
 
     def __init__(self, name, amount, is_current, balance_id, type_asset_id):
@@ -94,20 +96,6 @@ class Asset(db.Model):
         return f"<Asset {self.name}: {self.amount}>"
 
 
-class TypeLiability(db.Model):
-    __tablename__ = "types_liabilities"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True, nullable=False)
-    liabilities = db.relationship("Liabilities", backref="type_liability", lazy=True)
-
-    def __init__(self, name):
-        self.name = name
-
-    def __repr__(self):
-        return f"<TypeLiability {self.name}>"
-
-
 class Liability(db.Model):
     __tablename__ = "liabilities"
 
@@ -118,8 +106,8 @@ class Liability(db.Model):
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
     # Relationships
     balance_id = db.Column(db.Integer, db.ForeignKey("balances.id"), nullable=False)
-    type_liability_id = db.Column(
-        db.Integer, db.ForeignKey("types_liabilities.id"), nullable=False
+    type_id = db.Column(
+        db.Integer, db.ForeignKey("assets_liabilities_types.id"), nullable=False
     )
 
     def __init__(self, name, amount, is_current, balance_id, type_liability_id):
@@ -171,6 +159,7 @@ class Income(db.Model):
     # Relationships
     budget_id = db.Column(db.Integer, db.ForeignKey("budgets.id"), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey("accounts.id"), nullable=False)
+    period_id = db.Column(db.Integer, db.ForeignKey("periods.id"), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
 
@@ -193,6 +182,7 @@ class Expense(db.Model):
     # Relationships
     budget_id = db.Column(db.Integer, db.ForeignKey("budgets.id"), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey("accounts.id"), nullable=False)
+    period_id = db.Column(db.Integer, db.ForeignKey("periods.id"), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), nullable=False)
 
@@ -210,6 +200,7 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=True)
+    is_expense = db.Column(db.Boolean, default=False)
     # Relationships
     expenses = db.relationship("Expense", backref="category", lazy=True)
     incomes = db.relationship("Income", backref="category", lazy=True)
@@ -221,19 +212,34 @@ class Category(db.Model):
         return f"<Category {self.name}>"
 
 
-class TypeAccount(db.Model):
-    __tablename__ = "types_accounts"
+class Period(db.Model):
+    __tablename__ = "periods"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True, nullable=False)
+    amount_days = db.Column(db.Integer, unique=True, nullable=False)
+    # Relationships
+    expenses = db.relationship("Expense", backref="period", lazy=True)
+    incomes = db.relationship("Income", backref="period", lazy=True)
+
+    def __init__(self, name, amount_days):
+        self.name = name
+        self.amount_days = amount_days
+
+
+class AccountType(db.Model):
+    __tablename__ = "account_types"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
     # Relationships
-    accounts = db.relationship("Account", backref="type_account", lazy=True)
+    accounts = db.relationship("Account", backref="account_type", lazy=True)
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
-        return f"<TypeAccount {self.name}>"
+        return f"<AccountType {self.name}>"
 
 
 class Account(db.Model):
@@ -244,8 +250,8 @@ class Account(db.Model):
     initial_balance = db.Column(db.Numeric(10, 2), nullable=False)
     current_balance = db.Column(db.Numeric(10, 2), nullable=False)
     # Relationships
-    type_account_id = db.Column(
-        db.Integer, db.ForeignKey("types_accounts.id"), nullable=False
+    account_type_id = db.Column(
+        db.Integer, db.ForeignKey("account_types.id"), nullable=False
     )
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     income = db.relationship("Income", backref="account", lazy=True)
@@ -258,7 +264,7 @@ class Account(db.Model):
         self.initial_balance = initial_balance
         self.current_balance = current_balance
         self.type_account_id = type_account_id
-        self.user_id
+        self.user_id = user_id
 
     def __repr__(self):
         return f"<Account {self.name}: {self.current_balance}>"
