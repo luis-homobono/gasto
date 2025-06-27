@@ -1,6 +1,6 @@
 from flask import Flask
 from gasto.config import Config
-from gasto.extensions import db
+from gasto.extensions import db, migrate
 
 
 def create_app() -> Flask:
@@ -38,6 +38,4 @@ def install_extensions(app: Flask):
         app (Flask): Flask app
     """
     db.init_app(app=app)
-
-    with app.app_context():
-        db.create_all()
+    migrate.init_app(app=app, db=db)
