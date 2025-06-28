@@ -3,11 +3,10 @@
     --white: #FFFFFF;
     --black: #212121;
     --primary: #1A2E35;
-    /* --secundary: #1A2E35; */
     --gray: #ccc;
-    /* --gray: #666; */
-    /* --grisClaro: #DFE9F3; */
+    --grayDark: #444;
     --green: #A3F7BF;
+    --greenDark: #7cd9a1;
     --red: #EF4444;
 }
 
@@ -51,7 +50,6 @@ h3 {
 /* Section */
 .section {
     margin-bottom: 2.4rem;
-    /* padding-bottom: 2rem; */
 }
 
 .card {
@@ -63,13 +61,12 @@ h3 {
 }
 
 .card-main {
-    background-color: #A3F7BF;
+    background-color: var(--green);
     color: var(--black);
 }
 
 .text-sm {
     font-size: 2rem;
-    /* color: var(--gray); */
     color: var(--black);
 }
 
@@ -126,7 +123,7 @@ h3 {
     left: 0;
     right: 0;
     background-color: var(--primary);
-    border-top: 0.1rem solid #444;
+    border-top: 0.1rem solid var(--grayDark);
     display: flex;
     justify-content: space-around;
     padding: 1.2rem 0;

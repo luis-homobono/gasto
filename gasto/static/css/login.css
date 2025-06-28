@@ -1,0 +1,76 @@
+/* LOGIN Styles */
+h1 {
+    text-align: center;
+    margin-bottom: 2.4rem;
+    color: #1A2E35;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    background-color: white;
+    color: black;
+    border-radius: 1.2rem;
+    padding: 3.2rem 2.4rem;
+    width: 100%;
+    max-width: 38.0rem;
+    box-shadow: 0 0.8rem 2.0rem rgba(0, 0, 0, 0.3);
+}
+
+label {
+    display: block;
+    font-weight: 900;
+    margin-bottom: 0.6rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1.0rem 1.2rem;
+    margin-bottom: 1.6rem;
+    border: 0.1rem solid var(--gray);
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+}
+
+.btn-login {
+    background-color: var(--green);
+    color: black;
+    font-weight: bold;
+    padding: 1.2rem;
+    width: 100%;
+    border: none;
+    border-radius: 0.8ren;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--greenOscuro);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.6rem;
+    font-size: 1.4rem;
+}
+
+.login-footer a {
+    color: var(--greenOscuro);
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.errors {
+    font-size: 1.4rem;
+    color: var(--red);
+}

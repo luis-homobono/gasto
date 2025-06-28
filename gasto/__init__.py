@@ -1,6 +1,8 @@
 from flask import Flask
+
 from gasto.config import Config
-from gasto.extensions import db, migrate
+from gasto.models import User
+from gasto.extensions import db, migrate, login_manager
 
 
 def create_app() -> Flask:
@@ -25,8 +27,10 @@ def register_blueprints(app: Flask):
         app (Flask): Flask app
     """
     from gasto.blueprints.core.views import core
+    from gasto.blueprints.users.views import users
     from gasto.blueprints.error_pages.views import error_pages
 
+    app.register_blueprint(users)
     app.register_blueprint(error_pages)
     app.register_blueprint(core, url_prefix="/")
 
@@ -39,3 +43,10 @@ def install_extensions(app: Flask):
     """
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
+    login_manager.init_app(app=app)
+    login_manager.login_view = "blueprints.users.login"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
