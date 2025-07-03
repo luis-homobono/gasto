@@ -17,8 +17,8 @@ class User(db.Model):
     balances = db.relationship("Balance", backref="user", lazy=True)
     budgets = db.relationship("Budget", backref="user", lazy=True)
     accounts = db.relationship("Account", backref="user", lazy=True)
-    incomes = db.relationship("Incomes", backref="user", lazy=True)
-    expenses = db.relationship("Expenses", backref="user", lazy=True)
+    incomes = db.relationship("Income", backref="user", lazy=True)
+    expenses = db.relationship("Expense", backref="user", lazy=True)
 
     def __init__(self, username, email, password):
         self.username = username
@@ -40,10 +40,10 @@ class Balance(db.Model):
     # Relationships
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     assets = db.relationship(
-        "Assets", backref="balance", lazy=True, cascade="all, delete-orphan"
+        "Asset", backref="balance", lazy=True, cascade="all, delete-orphan"
     )
     liabilities = db.relationship(
-        "Liabilities", backref="balance", lazy=True, cascade="all, delete-orphan"
+        "Liability", backref="balance", lazy=True, cascade="all, delete-orphan"
     )
 
     def __init__(self, date, user_id):
