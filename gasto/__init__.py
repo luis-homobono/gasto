@@ -1,7 +1,7 @@
 from flask import Flask
 
-from gasto.config import Config
 from gasto.models import User
+from gasto.config import Config
 from gasto.extensions import db, migrate, login_manager
 
 

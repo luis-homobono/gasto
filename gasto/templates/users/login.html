@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 {% endblock %}
 {% block content %}
-<div class="login-container">
+<div class="form-container">
   <h1>Mi Gasto</h1>
 
   <form method="POST">
@@ -23,11 +23,11 @@
     {{ form.password.label() }}
     {{ form.password(class='form-control') }}
 
-    <button type="submit" class="btn-login">Iniciar Sesión</button>
+    {{ form.submit(class='form-btn') }}
   </form>
 
-  <div class="login-footer">
-    <p>¿No tienes cuenta? <a href="#">Regístrate</a></p>
+  <div class="form-footer">
+    <p>¿No tienes cuenta? <a href="{{ url_for('users.register')}}">Regístrate</a></p>
   </div>
 </div>
 {% endblock %}
