@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, current_app, redirect, url_for
+from sqlalchemy import or_
+from flask_login import login_user
+from flask import Blueprint, render_template, current_app, redirect, url_for, request
 
 from gasto.models import User
 from gasto.extensions import db
@@ -10,9 +12,19 @@ users = Blueprint("users", __name__)
 @users.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-
     if form.validate_on_submit():
-        print(form.data)
+        user = User.query.filter(
+            or_(User.email == form.email.data, User.username == form.email.data)
+        ).first()
+        if user.check_password(password=form.password.data) and user is not None:
+            login_user(user=user)
+            # flash('Log in Success!')
+
+            next = request.args.get("next")
+            if next == None or next[0] == "/":
+                next = url_for("core.index")
+
+            return redirect(next)
 
     current_app.logger.info(form.errors)
 
@@ -35,6 +47,6 @@ def register():
         db.session.commit()
 
         current_app.logger.info("User Registered Successfully")
-        return redirect(url_for('core.index'))
+        return redirect(url_for("users.login"))
 
     return render_template("users/register.html", form=form)

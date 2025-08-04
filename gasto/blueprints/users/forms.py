@@ -7,9 +7,9 @@ from gasto.models import User
 
 class LoginForm(FlaskForm):
     email = StringField(
-        "Correo electronico",
-        validators=[DataRequired(), Email()],
-        render_kw={"placeholder": "example@example.com"},
+        "Username/Correo electrónico",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "example/example@example.com"},
     )
     password = PasswordField(
         "Contraseña", validators=[DataRequired()], render_kw={"placeholder": "********"}

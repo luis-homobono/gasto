@@ -44,7 +44,7 @@ def install_extensions(app: Flask):
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
     login_manager.init_app(app=app)
-    login_manager.login_view = "blueprints.users.login"
+    login_manager.login_view = "users.login"
 
 
 @login_manager.user_loader

@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, request
+from flask_login import login_required
+from flask import Blueprint, render_template, request, redirect, url_for
+
 
 core = Blueprint("core", __name__)
 
 
 @core.route("/")
+@login_required
 def index():
     """View for index
 
